@@ -33,14 +33,15 @@ func TestWithAllDisabledCollectors(t *testing.T) {
 	performanceInsightClient := performance_insights_mock.PerformanceInsightsClient{}
 
 	configuration := exporter.Configuration{
-		CollectPerformanceInsights: false,
-		CollectInstanceMetrics:     false,
-		CollectInstanceTypes:       false,
-		CollectInstanceTags:        false,
-		CollectLogsSize:            false,
-		CollectMaintenances:        false,
-		CollectQuotas:              false,
-		CollectUsages:              false,
+		CollectPerformanceInsights:  false,
+		CollectInstanceMetrics:      false,
+		CollectInstanceMetricsDelay: 0,
+		CollectInstanceTypes:        false,
+		CollectInstanceTags:         false,
+		CollectLogsSize:             false,
+		CollectMaintenances:         false,
+		CollectQuotas:               false,
+		CollectUsages:               false,
 	}
 
 	collector := exporter.NewCollector(*logger, configuration, awsAccountID, awsRegion, rdsClient, ec2Client, cloudWatchClient, performanceInsightClient, servicequotasClient, nil)
@@ -71,14 +72,15 @@ func TestCollector(t *testing.T) {
 	performanceInsightClient := performance_insights_mock.PerformanceInsightsClient{}
 
 	configuration := exporter.Configuration{
-		CollectPerformanceInsights: true,
-		CollectInstanceMetrics:     true,
-		CollectInstanceTypes:       true,
-		CollectInstanceTags:        false,
-		CollectLogsSize:            true,
-		CollectMaintenances:        true,
-		CollectQuotas:              true,
-		CollectUsages:              true,
+		CollectPerformanceInsights:  true,
+		CollectInstanceMetrics:      true,
+		CollectInstanceMetricsDelay: 60,
+		CollectInstanceTypes:        true,
+		CollectInstanceTags:         false,
+		CollectLogsSize:             true,
+		CollectMaintenances:         true,
+		CollectQuotas:               true,
+		CollectUsages:               true,
 	}
 
 	collector := exporter.NewCollector(*logger, configuration, awsAccountID, awsRegion, rdsClient, ec2Client, cloudWatchClient, performanceInsightClient, servicequotasClient, nil)
