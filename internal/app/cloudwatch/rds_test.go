@@ -247,7 +247,6 @@ func generateMockedMetricsForInstance(id int, m cloudwatch.RdsMetrics) []aws_clo
 
 func TestGetDBInstanceTypeInformation(t *testing.T) {
 	instancesName := []string{}
-	delay := 0
 	data := []aws_cloudwatch_types.MetricDataResult{}
 
 	// Generate instances metrics
@@ -268,7 +267,7 @@ func TestGetDBInstanceTypeInformation(t *testing.T) {
 
 	client := cloudwatch_mock.CloudwatchClient{Metrics: data}
 	fetcher := cloudwatch.NewRDSFetcher(client, slog.Logger{})
-	result, err := fetcher.GetRDSInstanceMetrics(instancesName, delay)
+	result, err := fetcher.GetRDSInstanceMetrics(instancesName)
 
 	require.NoError(t, err, "GetRDSInstanceMetrics must succeed")
 	assert.Equal(t, float64(1), fetcher.GetStatistics().CloudWatchAPICall, "One call to Cloudwatch API")

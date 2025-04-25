@@ -31,16 +31,15 @@ const (
 var tracer = otel.Tracer("github/qonto/prometheus-rds-exporter/internal/app/exporter")
 
 type Configuration struct {
-	CollectInstanceMetrics      bool
-	CollectInstanceMetricsDelay int
-	CollectInstanceTags         bool
-	CollectInstanceTypes        bool
-	CollectLogsSize             bool
-	CollectMaintenances         bool
-	CollectQuotas               bool
-	CollectUsages               bool
-	CollectPerformanceInsights  bool
-	TagSelections               map[string][]string
+	CollectInstanceMetrics     bool
+	CollectInstanceTags        bool
+	CollectInstanceTypes       bool
+	CollectLogsSize            bool
+	CollectMaintenances        bool
+	CollectQuotas              bool
+	CollectUsages              bool
+	CollectPerformanceInsights bool
+	TagSelections              map[string][]string
 }
 
 type counters struct {
@@ -847,7 +846,7 @@ func (c *rdsCollector) getCloudwatchMetrics(client cloudwatch.CloudWatchClient, 
 
 	fetcher := cloudwatch.NewRDSFetcher(client, c.logger)
 
-	metrics, err := fetcher.GetRDSInstanceMetrics(instanceIdentifiers, c.configuration.CollectInstanceMetricsDelay)
+	metrics, err := fetcher.GetRDSInstanceMetrics(instanceIdentifiers)
 	if err != nil {
 		c.counters.Errors++
 	}
